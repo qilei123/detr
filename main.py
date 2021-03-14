@@ -119,9 +119,9 @@ def main(args):
     np.random.seed(seed)
     random.seed(seed)
 
-    _, criterion, postprocessors = build_model(args)
+    model, criterion, postprocessors = build_model(args)
 
-    model = detr_resnet50(pretrained=True,num_classes=2)
+    #model = detr_resnet50(pretrained=True,num_classes=2)
 
     model.to(device)
 
