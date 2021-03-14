@@ -123,6 +123,7 @@ class SetCriterion(nn.Module):
 
         if log:
             # TODO this should probably be a separate loss, not hacked in this one here
+            print(src_logits)
             print(src_logits[idx])
             print(target_classes_o)
             print(idx)
@@ -318,8 +319,9 @@ def build(args):
         # for panoptic, we just add a num_classes that is large enough to hold
         # max_obj_id + 1, but the exact value doesn't really matter
         num_classes = 250
-    print(num_classes)
-    num_classes = 2
+
+    num_classes = 2 #for erosive
+
     device = torch.device(args.device)
 
     backbone = build_backbone(args)
