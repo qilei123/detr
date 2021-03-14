@@ -123,9 +123,9 @@ class SetCriterion(nn.Module):
 
         if log:
             # TODO this should probably be a separate loss, not hacked in this one here
-            print(src_logits[idx])
-            print(target_classes_o)
-            print(idx)
+            #print(src_logits[idx])
+            #print(target_classes_o)
+            #print(idx)
             losses['class_error'] = 100 - accuracy(src_logits[idx], target_classes_o)[0]
         return losses
 
