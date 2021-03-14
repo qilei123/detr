@@ -120,7 +120,7 @@ def make_coco_transforms(image_set):
     ])
 
     scales = [480, 512, 544, 576, 608, 640, 672, 704, 736, 768, 800]
-    #scales = [800]
+    scales = [800]
     if image_set == 'train':
         return T.Compose([
             T.RandomHorizontalFlip(),
