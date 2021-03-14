@@ -331,10 +331,20 @@ def build(args):
     model = DETR(
         backbone,
         transformer,
-        num_classes=num_classes,
+        #num_classes=num_classes,
         num_queries=args.num_queries,
         aux_loss=args.aux_loss,
     )
+    
+    pretrained = True
+    if pretrained:
+        checkpoint = torch.hub.load_state_dict_from_url(
+        url="https://dl.fbaipublicfiles.com/detr/detr-r50-e632da11.pth", map_location="cpu", check_hash=True
+        )
+        model.load_state_dict(checkpoint["model"])
+    in_features = model.class_embed.in_features
+    model.class_embed = nn.Linear(in_features=in_features,out_features=num_classes)
+
     if args.masks:
         model = DETRsegm(model, freeze_detr=(args.frozen_weights is not None))
     matcher = build_matcher(args)
@@ -353,7 +363,7 @@ def build(args):
     losses = ['labels', 'boxes', 'cardinality']
     if args.masks:
         losses += ["masks"]
-    criterion = SetCriterion(num_classes-1, matcher=matcher, weight_dict=weight_dict,
+    criterion = SetCriterion(num_classes, matcher=matcher, weight_dict=weight_dict,
                              eos_coef=args.eos_coef, losses=losses)
     criterion.to(device)
     postprocessors = {'bbox': PostProcess()}
