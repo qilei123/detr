@@ -101,7 +101,7 @@ class SetCriterion(nn.Module):
         self.weight_dict = weight_dict
         self.eos_coef = eos_coef
         self.losses = losses
-        empty_weight = torch.ones(self.num_classes + 1)
+        empty_weight = torch.ones(self.num_classes)
         empty_weight[-1] = self.eos_coef
         self.register_buffer('empty_weight', empty_weight)
 
@@ -319,7 +319,7 @@ def build(args):
         # max_obj_id + 1, but the exact value doesn't really matter
         num_classes = 250
 
-    num_classes = 1 #for erosive
+    num_classes = 2 #for erosive
 
     device = torch.device(args.device)
 
