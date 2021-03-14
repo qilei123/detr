@@ -343,7 +343,7 @@ def build(args):
         )
         model.load_state_dict(checkpoint["model"])
     in_features = model.class_embed.in_features
-    model.class_embed = nn.Linear(in_features=in_features,out_features=num_classes)
+    model.class_embed = nn.Linear(in_features=in_features,out_features=num_classes+1)
 
     if args.masks:
         model = DETRsegm(model, freeze_detr=(args.frozen_weights is not None))
