@@ -16,6 +16,7 @@ from datasets import build_dataset, get_coco_api_from_dataset
 from engine import evaluate, train_one_epoch
 from models import build_model
 
+from hubconf import detr_resnet50, detr_resnet50_panoptic
 
 def get_args_parser():
     parser = argparse.ArgumentParser('Set transformer detector', add_help=False)
@@ -119,6 +120,9 @@ def main(args):
     random.seed(seed)
 
     model, criterion, postprocessors = build_model(args)
+
+    model = detr_resnet50(pretrained=True,num_classes=2)
+
     model.to(device)
 
     model_without_ddp = model
